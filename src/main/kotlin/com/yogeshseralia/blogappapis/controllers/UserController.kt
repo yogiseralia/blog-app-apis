@@ -5,10 +5,7 @@ import com.yogeshseralia.blogappapis.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/users")
@@ -25,7 +22,19 @@ class UserController {
     }
 
     //PUT update
+    @PutMapping("/{userId}")
+    fun updateUser(@RequestBody userDto: UserDto, @PathVariable userId: Int): ResponseEntity<UserDto> {
+        val updatedUser = userService.updateUser(userDto, userId)
+        return ResponseEntity.ok(updatedUser)
+    }
+
     //DELETE delete
+    @DeleteMapping("/{userId}")
+    fun deleteUser(@PathVariable userId: Int): ResponseEntity<Map<String, String>> {
+        userService.getDeleteUser(userId)
+        return ResponseEntity<Map<String, String>>(mapOf("message" to "user deleted successfully"), HttpStatus.OK)
+    }
     //GET get
+
     //GET getall
 }
