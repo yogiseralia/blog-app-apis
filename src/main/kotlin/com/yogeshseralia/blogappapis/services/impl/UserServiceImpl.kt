@@ -5,6 +5,7 @@ import com.yogeshseralia.blogappapis.exceptions.ResourceNotFoundException
 import com.yogeshseralia.blogappapis.payloads.UserDto
 import com.yogeshseralia.blogappapis.repositories.UserRepository
 import com.yogeshseralia.blogappapis.services.UserService
+import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -13,6 +14,9 @@ class UserServiceImpl : UserService {
 
     @Autowired
     private lateinit var userRepository: UserRepository
+
+    @Autowired(required = true)
+    private lateinit var modelMapper: ModelMapper
 
     override fun createUser(userDto: UserDto): UserDto {
         val user = userDtoToUser(userDto)
@@ -46,7 +50,13 @@ class UserServiceImpl : UserService {
         userRepository.delete(savedUser)
     }
 
-    private fun userToUserDto(user: User): UserDto = UserDto(user.id, user.name, user.email, user.password, user.about)
+    private fun userToUserDto(user: User): UserDto {
+//        UserDto(user.id, user.name, user.email, user.password, user.about)
+        return modelMapper.map(user, UserDto::class.java)
+    }
 
-    private fun userDtoToUser(user: UserDto): User = User(user.id, user.name, user.email, user.password, user.about)
+    private fun userDtoToUser(user: UserDto): User {
+//        User(user.id, user.name, user.email, user.password, user.about)
+        return modelMapper.map(user, User::class.java)
+    }
 }

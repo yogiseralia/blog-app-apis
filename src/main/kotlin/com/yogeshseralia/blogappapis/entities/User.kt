@@ -7,7 +7,6 @@ import lombok.Setter
 
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
 data class User(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,4 +16,6 @@ data class User(
         var email: String,
         var password: String,
         var about: String
-)
+) {
+        constructor() : this(0, "", "", "", "")
+}

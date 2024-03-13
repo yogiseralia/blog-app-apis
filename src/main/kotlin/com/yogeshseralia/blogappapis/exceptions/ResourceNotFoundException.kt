@@ -6,10 +6,10 @@ import lombok.Setter
 @Getter
 @Setter
 data class ResourceNotFoundException(
-        private val resource: String,
-        private val identifierName: String,
-        private val identifierValue: Int) :
-        RuntimeException(String.format("%s not found with %s : %l",
+        val resource: String,
+        val identifierName: String,
+        val identifierValue: Int) :
+        RuntimeException(String.format("%s not found with %s : %s",
                 resource,
                 identifierName,
                 identifierValue

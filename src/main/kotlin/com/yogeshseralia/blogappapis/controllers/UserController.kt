@@ -1,5 +1,6 @@
 package com.yogeshseralia.blogappapis.controllers
 
+import com.yogeshseralia.blogappapis.entities.User
 import com.yogeshseralia.blogappapis.payloads.UserDto
 import com.yogeshseralia.blogappapis.services.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,7 +35,16 @@ class UserController {
         userService.getDeleteUser(userId)
         return ResponseEntity<Map<String, String>>(mapOf("message" to "user deleted successfully"), HttpStatus.OK)
     }
-    //GET get
 
     //GET getall
+    @GetMapping("/{userId}")
+    fun getUserById(@PathVariable userId: Int): ResponseEntity<UserDto> {
+        return ResponseEntity.ok(userService.getUserById(userId))
+    }
+
+    //GET get
+    @GetMapping("/")
+    fun getAllUsers(): ResponseEntity<List<UserDto>> {
+        return ResponseEntity.ok(userService.getAllUsers())
+    }
 }
