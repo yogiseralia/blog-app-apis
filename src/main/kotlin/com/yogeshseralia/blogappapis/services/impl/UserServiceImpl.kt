@@ -51,12 +51,10 @@ class UserServiceImpl : UserService {
     }
 
     private fun userToUserDto(user: User): UserDto {
-//        UserDto(user.id, user.name, user.email, user.password, user.about)
-        return modelMapper.map(user, UserDto::class.java)
+        return UserDto(user.id, user.name, user.email, user.password, user.about)
     }
 
     private fun userDtoToUser(user: UserDto): User {
-//        User(user.id, user.name, user.email, user.password, user.about)
-        return modelMapper.map(user, User::class.java)
+        return User(user.id, user.name, user.email, user.password, user.about)
     }
 }

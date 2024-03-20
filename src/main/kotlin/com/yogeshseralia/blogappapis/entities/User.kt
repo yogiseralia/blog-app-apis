@@ -9,13 +9,13 @@ import lombok.Setter
 @Table(name = "users")
 data class User(
         @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
         var id: Int,
         @Column(name = "user_name", nullable = false, length = 100)
         var name: String,
         var email: String,
         var password: String,
-        var about: String
-) {
-        constructor() : this(0, "", "", "", "")
-}
+        var about: String,
+        @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        private val posts: List<Post> = arrayListOf()
+)

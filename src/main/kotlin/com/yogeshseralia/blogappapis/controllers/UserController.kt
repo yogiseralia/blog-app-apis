@@ -3,9 +3,11 @@ package com.yogeshseralia.blogappapis.controllers
 import com.yogeshseralia.blogappapis.entities.User
 import com.yogeshseralia.blogappapis.payloads.UserDto
 import com.yogeshseralia.blogappapis.services.UserService
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -17,14 +19,14 @@ class UserController {
 
     //POST create
     @PostMapping("/")
-    fun createUser(@RequestBody userDto: UserDto): ResponseEntity<UserDto> {
+    fun createUser(@Validated @RequestBody userDto: UserDto): ResponseEntity<UserDto> {
         val createdUser = userService.createUser(userDto)
         return ResponseEntity(createdUser, HttpStatus.CREATED)
     }
 
     //PUT update
     @PutMapping("/{userId}")
-    fun updateUser(@RequestBody userDto: UserDto, @PathVariable userId: Int): ResponseEntity<UserDto> {
+    fun updateUser(@Validated @RequestBody userDto: UserDto, @PathVariable userId: Int): ResponseEntity<UserDto> {
         val updatedUser = userService.updateUser(userDto, userId)
         return ResponseEntity.ok(updatedUser)
     }
