@@ -13,11 +13,11 @@ import lombok.Setter
 data class Category(
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
-        val categoryId: Int,
+        val categoryId: Int = 0,
         @Column(name = "title", length = 100, nullable = false)
-        var categoryTitle: String,
+        var categoryTitle: String = "",
         @Column(name = "description")
-        var categoryDescription: String,
+        var categoryDescription: String = "",
 
         @OneToMany(mappedBy = "category", cascade = arrayOf(CascadeType.ALL), fetch = FetchType.LAZY)
         private val posts: List<Post> = arrayListOf()

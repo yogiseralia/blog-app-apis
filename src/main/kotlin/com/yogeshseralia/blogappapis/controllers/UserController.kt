@@ -1,9 +1,7 @@
 package com.yogeshseralia.blogappapis.controllers
 
-import com.yogeshseralia.blogappapis.entities.User
 import com.yogeshseralia.blogappapis.payloads.UserDto
 import com.yogeshseralia.blogappapis.services.UserService
-import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
