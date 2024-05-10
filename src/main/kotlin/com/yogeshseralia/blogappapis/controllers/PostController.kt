@@ -1,6 +1,12 @@
 package com.yogeshseralia.blogappapis.controllers
 
+import com.yogeshseralia.blogappapis.config.AppConstants.DEFAULT_PAGE_NUMBER
+import com.yogeshseralia.blogappapis.config.AppConstants.DEFAULT_PAGE_SIZE
+import com.yogeshseralia.blogappapis.config.AppConstants.TITLE
+import com.yogeshseralia.blogappapis.config.AppConstants.TRUE
+import com.yogeshseralia.blogappapis.payloads.ApiResponse
 import com.yogeshseralia.blogappapis.payloads.PostDto
+import com.yogeshseralia.blogappapis.payloads.PostResponse
 import com.yogeshseralia.blogappapis.services.PostService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -37,15 +43,37 @@ class PostController {
         return ResponseEntity.ok(postDtoList)
     }
 
-    @GetMapping("/posts")
-    fun getAllPosts(): ResponseEntity<List<PostDto>> {
-        val postDtoList = service.getAllPosts()
-        return ResponseEntity.ok(postDtoList)
-    }
-
     @GetMapping("/post/{postId}")
     fun getPostById(@PathVariable postId: Int): ResponseEntity<PostDto> {
         val postDto = service.getPostById(postId)
         return ResponseEntity.ok(postDto)
+    }
+
+    @DeleteMapping("/post/{postId}")
+    fun deletePost(@PathVariable postId: Int): ApiResponse {
+        service.deletePost(postId)
+        return ApiResponse("Post successfully deleted!!", true)
+    }
+
+    @PutMapping("/post/{postId}")
+    fun updatePost(@PathVariable postId: Int, @RequestBody postDto: PostDto): ResponseEntity<PostDto> {
+        val updatedPost: PostDto = service.updatePost(postDto, postId)
+        return ResponseEntity.ok(updatedPost)
+    }
+
+    @GetMapping("/posts")
+    fun getPosts(@RequestParam("pageNumber", defaultValue = DEFAULT_PAGE_NUMBER, required = false) pageNumber: Int,
+                 @RequestParam("pageSize", defaultValue = DEFAULT_PAGE_SIZE, required = false) pageSize: Int,
+                 @RequestParam("sortBy", defaultValue = TITLE, required = false) sortBy: String,
+                 @RequestParam("isAscending", defaultValue = TRUE, required = false) isAscending: Boolean):
+            ResponseEntity<PostResponse> {
+        val postResponse = service.getPosts(pageNumber, pageSize, sortBy, isAscending)
+        return ResponseEntity.ok(postResponse)
+    }
+
+    @GetMapping("/posts/search/{keyword}")
+    fun searchPostsByTitle(@PathVariable("keyword") keywordInTitle: String): ResponseEntity<List<PostDto>> {
+        val searchedPosts: List<PostDto> = service.searchPostsByContent(keywordInTitle)
+        return ResponseEntity.ok(searchedPosts)
     }
 }

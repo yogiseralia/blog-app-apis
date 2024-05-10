@@ -1,6 +1,7 @@
 package com.yogeshseralia.blogappapis.services
 
 import com.yogeshseralia.blogappapis.payloads.PostDto
+import com.yogeshseralia.blogappapis.payloads.PostResponse
 
 interface PostService {
     //create
@@ -23,4 +24,11 @@ interface PostService {
 
     //getAll
     fun getAllPosts(): List<PostDto>
+
+    //get posts by page
+    fun getPosts(pageNumber: Int, pageSize: Int, sortBy: String, isAscending: Boolean): PostResponse
+
+    fun searchPosts(title: String): List<PostDto>
+
+    fun searchPostsByContent(title: String): List<PostDto>
 }
