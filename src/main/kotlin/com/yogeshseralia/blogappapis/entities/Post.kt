@@ -22,6 +22,7 @@ data class Post(
         var imageName: String = "",
         var addDate: Date = Date(),
         @ManyToOne
+        @JoinColumn(name = "user_id")
         var user: User = User(),
         @ManyToOne
         @JoinColumn(name = "category_id")

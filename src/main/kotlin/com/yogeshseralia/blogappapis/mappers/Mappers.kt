@@ -1,9 +1,11 @@
 package com.yogeshseralia.blogappapis.mappers
 
 import com.yogeshseralia.blogappapis.entities.Category
+import com.yogeshseralia.blogappapis.entities.Comment
 import com.yogeshseralia.blogappapis.entities.Post
 import com.yogeshseralia.blogappapis.entities.User
 import com.yogeshseralia.blogappapis.payloads.CategoryDto
+import com.yogeshseralia.blogappapis.payloads.CommentDto
 import com.yogeshseralia.blogappapis.payloads.PostDto
 import com.yogeshseralia.blogappapis.payloads.UserDto
 
@@ -42,5 +44,15 @@ fun Post.mapToPostDto(): PostDto {
             addedDate = addDate,
             categoryDto = category.mapToCategoryDto(),
             userDto = user.mapToUserDto()
+    )
+}
+
+fun Comment.mapToCommentDto(): CommentDto {
+    return CommentDto(
+        id,
+        comment,
+        addDate,
+        user.mapToUserDto(),
+        post.mapToPostDto()
     )
 }
